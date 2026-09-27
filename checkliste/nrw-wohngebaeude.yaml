@@ -1,0 +1,121 @@
+# ===========================================================================
+#  ENTWURF - NICHT GEPRUEFT
+#
+#  Diese Datei ist ein Geruest. Die Dokumenttypen sind die ueblichen
+#  Bauvorlagen fuer ein Wohngebaeude in NRW, ABER:
+#
+#    * jedes "quelle:"-Feld ist ein TODO und muss gegen die aktuelle
+#      BauPruefVO NRW und BauO NRW gefuellt werden,
+#    * jede Frist in "monate:" ist geschaetzt und muss belegt werden,
+#    * die Zuordnung "pflicht: wenn ..." zu Gebaeudeklassen ist ungeprueft.
+#
+#  Vor dem ersten echten Einsatz von einer bauvorlageberechtigten Person
+#  gegenlesen lassen. Bis dahin ist das Ergebnis eine Arbeitshilfe,
+#  keine Aussage zur Genehmigungsfaehigkeit.
+# ===========================================================================
+
+version: "0.1-entwurf"
+bundesland: NRW
+gilt_fuer: Wohngebaeude
+
+punkte:
+  - id: antragsformular
+    titel: Bauantrag (amtliches Formular)
+    quelle: "TODO: § ? BauPruefVO NRW"
+    pflicht: immer
+    pruefungen:
+      - typ: vorhanden
+      - typ: unterschrift
+        von: bauherr
+      - typ: unterschrift
+        von: entwurfsverfasser
+      - typ: konsistent_mit
+        felder: [bauherr, gemarkung, flur, flurstueck]
+
+  - id: lageplan
+    titel: Amtlicher Lageplan
+    quelle: "TODO: § ? BauPruefVO NRW"
+    pflicht: immer
+    pruefungen:
+      - typ: vorhanden
+      - typ: nicht_aelter_als
+        monate: 12          # TODO: Frist belegen
+      - typ: konsistent_mit
+        felder: [gemarkung, flur, flurstueck]
+
+  - id: bauzeichnungen
+    titel: Bauzeichnungen (Grundrisse, Schnitte, Ansichten)
+    quelle: "TODO: § ? BauPruefVO NRW"
+    pflicht: immer
+    pruefungen:
+      - typ: vorhanden
+      - typ: unterschrift
+        von: entwurfsverfasser
+
+  - id: baubeschreibung
+    titel: Baubeschreibung
+    quelle: "TODO: § ? BauPruefVO NRW"
+    pflicht: immer
+    pruefungen:
+      - typ: vorhanden
+      - typ: konsistent_mit
+        felder: [bauherr, gemarkung]
+
+  - id: berechnungen
+    titel: Berechnung Bruttorauminhalt / Nutzflaeche
+    quelle: "TODO: § ? BauPruefVO NRW"
+    pflicht: immer
+    pruefungen:
+      - typ: vorhanden
+
+  - id: standsicherheit
+    titel: Standsicherheitsnachweis
+    quelle: "TODO: § ? BauPruefVO NRW"
+    pflicht:
+      wenn:
+        feld: gebaeudeklasse
+        operator: ">="
+        wert: 3
+    pruefungen:
+      - typ: vorhanden
+      - typ: unterschrift
+        von: nachweisberechtigt_standsicherheit
+
+  - id: brandschutz
+    titel: Brandschutzkonzept
+    quelle: "TODO: § ? BauPruefVO NRW"
+    pflicht:
+      wenn:
+        feld: sonderbau
+        operator: "=="
+        wert: true
+    pruefungen:
+      - typ: vorhanden
+
+  - id: entwaesserung
+    titel: Entwaesserungsplan / Grundstuecksentwaesserung
+    quelle: "TODO: § ? BauPruefVO NRW"
+    pflicht: immer
+    pruefungen:
+      - typ: vorhanden
+
+  - id: waermeschutz
+    titel: Nachweis Waermeschutz (GEG)
+    quelle: "TODO: § ? GEG"
+    pflicht: immer
+    pruefungen:
+      - typ: vorhanden
+
+  - id: stellplatznachweis
+    titel: Stellplatznachweis
+    quelle: "TODO: § ? BauO NRW + kommunale Satzung"
+    pflicht: immer
+    pruefungen:
+      - typ: vorhanden
+
+  - id: statistikbogen
+    titel: Erhebungsbogen Bautaetigkeitsstatistik
+    quelle: "TODO: HBauStatG"
+    pflicht: immer
+    pruefungen:
+      - typ: vorhanden

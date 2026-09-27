@@ -1,0 +1,5 @@
+cache/
+antrag/*.pdf
+.venv/
+__pycache__/
+*.pyc
